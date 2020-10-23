@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
           backgroundColor: Color(0xffFC4F32),
           title: Text(
             "Login",
-            style: TextStyle(color: Colors.white, fontSize: 25),
+            style: TextStyle(color: Colors.white),
           ),
         ),
         body: SingleChildScrollView(
