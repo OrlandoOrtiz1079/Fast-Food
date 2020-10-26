@@ -10,19 +10,19 @@ class _SingUpState extends State<SingUp> {
   Widget build(BuildContext context) {
     String nombre = "", email = "", telefono = "", contra = "", contra2 = "";
 
-    final nombreC = TextEditingController();
-    final emailC = TextEditingController();
-    final telefonoC = TextEditingController();
-    final contraC = TextEditingController();
-    final contra2C = TextEditingController();
+    final nombreController = TextEditingController();
+    final emailController = TextEditingController();
+    final telefonoController = TextEditingController();
+    final contraController = TextEditingController();
+    final contra2Controller = TextEditingController();
 
     @override
     void disponse() {
-      nombreC.dispose();
-      emailC.dispose();
-      telefonoC.dispose();
-      contraC.dispose();
-      contra2C.dispose();
+      nombreController.dispose();
+      emailController.dispose();
+      telefonoController.dispose();
+      contraController.dispose();
+      contra2Controller.dispose();
       super.dispose();
     }
 
@@ -58,7 +58,7 @@ class _SingUpState extends State<SingUp> {
                         ),
                         child: TextField(
                           //autofocus: true,
-                          controller: nombreC,
+                          controller: nombreController,
                           style: TextStyle(color: Colors.black, fontSize: 18),
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
@@ -88,7 +88,7 @@ class _SingUpState extends State<SingUp> {
                               ),
                         ),
                         child: TextField(
-                          controller: emailC,
+                          controller: emailController,
                           style: TextStyle(color: Colors.black, fontSize: 18),
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
@@ -117,7 +117,7 @@ class _SingUpState extends State<SingUp> {
                               ),
                         ),
                         child: TextField(
-                          controller: telefonoC,
+                          controller: telefonoController,
                           style: TextStyle(color: Colors.black, fontSize: 18),
                           keyboardType: TextInputType.phone,
                           decoration: InputDecoration(
@@ -146,7 +146,7 @@ class _SingUpState extends State<SingUp> {
                               ),
                         ),
                         child: TextField(
-                          controller: contraC,
+                          controller: contraController,
                           style: TextStyle(color: Colors.black, fontSize: 18),
                           obscureText: true,
                           obscuringCharacter: "*",
@@ -177,7 +177,7 @@ class _SingUpState extends State<SingUp> {
                               ),
                         ),
                         child: TextField(
-                          controller: contra2C,
+                          controller: contra2Controller,
                           style: TextStyle(color: Colors.black, fontSize: 18),
                           obscureText: true,
                           obscuringCharacter: "*",
@@ -210,15 +210,15 @@ class _SingUpState extends State<SingUp> {
                           //splashColor: Colors.white,
                           //shape: CircleBorder(),
                           onPressed: () {
-                            nombre = nombreC.text;
-                            email = emailC.text;
-                            telefono = telefonoC.text;
-                            contra = contraC.text;
-                            contra2 = contra2C.text;
-                            if (nombre == "" &&
-                                email == "" &&
-                                telefono == "" &&
-                                contra == "" &&
+                            nombre = nombreController.text;
+                            email = emailController.text;
+                            telefono = telefonoController.text;
+                            contra = contraController.text;
+                            contra2 = contra2Controller.text;
+                            if (nombre == "" ||
+                                email == "" ||
+                                telefono == "" ||
+                                contra == "" ||
                                 contra2 == "") {
                               showDialog(
                                   context: context,
@@ -251,8 +251,8 @@ class _SingUpState extends State<SingUp> {
                                             FlatButton(
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
-                                                  contra2C.clear();
-                                                  contraC.clear();
+                                                  contra2Controller.clear();
+                                                  contraController.clear();
                                                 },
                                                 child: Text("Aceptar"))
                                           ],
