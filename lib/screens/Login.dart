@@ -219,8 +219,6 @@ class _LoginState extends State<Login> {
                               Scaffold.of(context).showSnackBar(sb);
                             }
 
-                            //nombre = nombreControler.text;
-                            //contra = contraControler.text;
                             print("El nombre es $nombre");
                             print("La contraseña es $contra");
                           },
