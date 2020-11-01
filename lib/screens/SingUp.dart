@@ -1,7 +1,10 @@
 //Orlando Ortiz
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:practica_1/Providers/UserPrv.dart';
 import 'package:practica_1/models/users.dart';
+import 'package:practica_1/utils/string_admin.dart';
+import 'package:provider/provider.dart';
 
 class SingUp extends StatefulWidget {
   @override
@@ -10,17 +13,18 @@ class SingUp extends StatefulWidget {
 
 class _SingUpState extends State<SingUp> {
   User user = User();
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final UserPrv userProvider = Provider.of<UserPrv>(context);
     /*Borar variables
     String nombre = "", email = "", telefono = "", contra = "", contra2 = "";
-
     final nombreController = TextEditingController();
     final emailController = TextEditingController();
-    final telefonoController = TextEditingController();
+    final telefonoController = TextEditingController();*/
     final contraController = TextEditingController();
-    final contra2Controller = TextEditingController();*/
+    final contra2Controller = TextEditingController();
 
     @override
     void disponse() {
@@ -40,6 +44,7 @@ class _SingUpState extends State<SingUp> {
         ),
         body: SingleChildScrollView(
           child: Form(
+            key: _formkey,
             child: Container(
               color: Color(0xfffeefd5),
               child: Center(
@@ -111,9 +116,18 @@ class _SingUpState extends State<SingUp> {
                           ),
                           child: TextFormField(
                             inputFormatters: [
-                              FilteringTextInputFormatter.allow(RegExp(
-                                  r'/^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/'))
+                              FilteringTextInputFormatter.deny(RegExp(r'\s')),
                             ],
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Ingresa un correo valido';
+                              }
+                              if (!StringAdm.validarEmail(value)) {
+                                return 'Ingresa un email valido';
+                              }
+                              user.email = value;
+                              return null;
+                            },
                             style: TextStyle(color: Colors.black, fontSize: 18),
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
@@ -215,6 +229,13 @@ class _SingUpState extends State<SingUp> {
                                 ),
                           ),
                           child: TextFormField(
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Ingrese una contraseña';
+                              }
+                              user.password = value;
+                              return null;
+                            },
                             style: TextStyle(color: Colors.black, fontSize: 18),
                             obscureText: true,
                             obscuringCharacter: "*",
@@ -246,7 +267,20 @@ class _SingUpState extends State<SingUp> {
                           child: FlatButton(
                             //splashColor: Colors.white,
                             //shape: CircleBorder(),
-                            onPressed: () {},
+                            onPressed: () async {
+                              if (!_formkey.currentState.validate()) {
+                                return null;
+                              }
+
+                              print('todo ok');
+                              print(user.email);
+                              print(user.password);
+                              final sb = SnackBar(
+                                  content: Text('Los datos se han guardado!'));
+
+                              Scaffold.of(context).showSnackBar(sb);
+                              userProvider.user = user;
+                            },
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),

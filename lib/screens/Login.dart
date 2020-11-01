@@ -1,7 +1,11 @@
 //Orlando Ortiz
 import 'package:flutter/material.dart';
+import 'package:practica_1/Providers/UserPrv.dart';
+import 'package:practica_1/models/users.dart';
+import 'package:practica_1/screens/Dashboard.dart';
 import 'package:practica_1/screens/SingUp.dart';
-
+import 'package:practica_1/utils/string_admin.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -14,6 +18,7 @@ class _LoginState extends State<Login> {
   String contra = "";
   final contraControler = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey();
+  User user = User();
 
   @override
   void disponse() {
@@ -23,6 +28,7 @@ class _LoginState extends State<Login> {
   }
 
   Widget build(BuildContext context) {
+    final UserPrv userProvider = Provider.of<UserPrv>(context);
     return Container(
       child: Scaffold(
         appBar: AppBar(
@@ -186,36 +192,37 @@ class _LoginState extends State<Login> {
                           //splashColor: Colors.white,
                           //shape: CircleBorder(),
                           onPressed: () {
-                            nombre = nombreControler.text;
-                            contra = contraControler.text;
+                            final sb = SnackBar(
+                              content:
+                                  Text('!Usuario o contraseña incorrectos'),
+                            );
+
+                            if (!_formkey.currentState.validate()) {
+                              return;
+                            }
+
+                            var retUser = userProvider.getUser(user.email);
+
+                            print(retUser.password + '2143qr');
+                            if (retUser != null) {
+                              if (!StringAdm.validarPasswords(
+                                  retUser.password, user.password)) {
+                                Scaffold.of(context).showSnackBar(sb);
+                                print('contraseña no coincide');
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Dashboard()));
+                              }
+                            } else {
+                              Scaffold.of(context).showSnackBar(sb);
+                            }
+
+                            //nombre = nombreControler.text;
+                            //contra = contraControler.text;
                             print("El nombre es $nombre");
                             print("La contraseña es $contra");
-
-                            showDialog(
-                                context: context,
-                                builder: (_) => new AlertDialog(
-                                      title: Center(
-                                          child: new Text(
-                                        "Datos ingresados",
-                                        style: TextStyle(),
-                                      )),
-                                      content: Text(
-                                          "El nombre: $nombre \nLa contraseña: $contra"),
-                                      actions: <Widget>[
-                                        FlatButton(
-                                          child: Text('Cerrar'),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        FlatButton(
-                                          child: Text('Aceptar'),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        )
-                                      ],
-                                    ));
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
