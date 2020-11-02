@@ -23,8 +23,6 @@ class _SingUpState extends State<SingUp> {
     final nombreController = TextEditingController();
     final emailController = TextEditingController();
     final telefonoController = TextEditingController();*/
-    final contraController = TextEditingController();
-    final contra2Controller = TextEditingController();
 
     @override
     void disponse() {
@@ -33,7 +31,7 @@ class _SingUpState extends State<SingUp> {
       telefonoController.dispose();
       contraController.dispose();
       contra2Controller.dispose();*/
-      // User.dispose();
+      super.dispose();
     }
 
     return Container(
@@ -275,11 +273,12 @@ class _SingUpState extends State<SingUp> {
                               print('todo ok');
                               print(user.email);
                               print(user.password);
+                              print('Los datos se han guardado!');
                               final sb = SnackBar(
                                   content: Text('Los datos se han guardado!'));
 
                               Scaffold.of(context).showSnackBar(sb);
-                              userProvider.user = user;
+                              userProvider.users = user;
                             },
                             child: Padding(
                               padding:

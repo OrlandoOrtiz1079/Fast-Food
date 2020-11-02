@@ -14,9 +14,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   String nombre = "";
-  final nombreControler = TextEditingController();
+  TextEditingController nombreControler = TextEditingController();
   String contra = "";
-  final contraControler = TextEditingController();
+  TextEditingController contraControler = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey();
   User user = User();
 
@@ -94,8 +94,9 @@ class _LoginState extends State<Login> {
                         child: TextFormField(
                           //autofocus: true,
                           controller: nombreControler,
+
                           style: TextStyle(color: Colors.black),
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: "Ingresa tu gmail",
@@ -191,7 +192,9 @@ class _LoginState extends State<Login> {
                         child: FlatButton(
                           //splashColor: Colors.white,
                           //shape: CircleBorder(),
+
                           onPressed: () {
+                            contra = contraControler.text;
                             final sb = SnackBar(
                               content:
                                   Text('!Usuario o contraseña incorrectos'),
@@ -203,11 +206,13 @@ class _LoginState extends State<Login> {
 
                             var retUser = userProvider.getUser(user.email);
 
-                            print(retUser.password + '2143qr');
-                            if (retUser != null) {
+                            //      print(retUser.password + '2143qr');
+                            if (retUser == null) {
+                              print("La contraseña es $contra");
                               if (!StringAdm.validarPasswords(
-                                  retUser.password, user.password)) {
-                                Scaffold.of(context).showSnackBar(sb);
+                                  retUser.password, contra)) {
+                                //true o false
+                                //   Scaffold.of(context).showSnackBar(sb);
                                 print('contraseña no coincide');
                               } else {
                                 Navigator.push(
@@ -216,9 +221,9 @@ class _LoginState extends State<Login> {
                                         builder: (context) => Dashboard()));
                               }
                             } else {
-                              Scaffold.of(context).showSnackBar(sb);
+                              //   Scaffold.of(context).showSnackBar(sb);
+                              print("El nombre es rthfgdffdhdf");
                             }
-
                             print("El nombre es $nombre");
                             print("La contraseña es $contra");
                           },
