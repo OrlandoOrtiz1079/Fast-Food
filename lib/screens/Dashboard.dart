@@ -1,51 +1,40 @@
 import 'package:flutter/material.dart';
 //import 'package:practica_1/main.dart';
+import 'package:divine_card/divine_card.dart';
+
 
 class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-          body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 200,
-            floating: true,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text("Dashboar"),
-            ),
+        appBar: AppBar(
+          title: Text("Hola Orlando"),
+        ),
+        body: Container(
+          child: Column(
+            children: [divineCard(
+     height: 200.0,
+     color: Color(0xFF00578D),
+     shadowColor: Colors.black38,
+     blurRadius: 12.0,
+     img: AssetImage('images/fondo.jpg'),
+     imgHeight: 200.0,
+     imgWidth: 200.0,
+     buttonText: 'Your Text',
+     buttonColor: Colors.black,
+     buttonBackground: Colors.white,
+     icon: Icons.arrow_forward_ios,
+     iconColor: Colors.black,
+     title: 'Your text goes',
+     subtitle: 'Here..',
+     fontSize: 18.0,
+     fontColor: Colors.white,
+ 
+             ),],
           ),
-          SliverFillRemaining(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Color(0xffFC4F32),
-                      borderRadius: BorderRadius.circular(15)),
-                  width: 320,
-                  height: 65,
-                  margin: EdgeInsets.only(top: 0),
-                  child: FlatButton(
-                    onPressed: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        'INICIAR AHORA',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Color(0xffffffff),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
-        ],
-      )),
+        ),
+      ),
     );
   }
 }

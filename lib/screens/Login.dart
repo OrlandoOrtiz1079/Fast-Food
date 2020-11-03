@@ -1,250 +1,266 @@
-//Orlando Ortiz
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:practica_1/Providers/UserPrv.dart';
 import 'package:practica_1/models/users.dart';
 import 'package:practica_1/screens/Dashboard.dart';
 import 'package:practica_1/screens/SingUp.dart';
-import 'package:practica_1/utils/string_admin.dart';
+import 'package:practica_1/screens/splash.dart';
+import 'package:practica_1/utils/StringAdm.dart';
 import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
+  Login({Key key}) : super(key: key);
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
-  String nombre = "";
-  TextEditingController nombreControler = TextEditingController();
-  String contra = "";
-  TextEditingController contraControler = TextEditingController();
-  final GlobalKey<FormState> _formkey = GlobalKey();
   User user = User();
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
-  void disponse() {
-    nombreControler.dispose();
-    contraControler.dispose();
+  void dispose() {
     super.dispose();
   }
 
   Widget build(BuildContext context) {
     final UserPrv userProvider = Provider.of<UserPrv>(context);
-    return Container(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xffFC4F32),
-          title: Text(
-            "Login",
-            style: TextStyle(color: Colors.white),
-          ),
+
+    return Scaffold(
+      backgroundColor: Color(0xfffeefd5),
+      appBar: AppBar(
+        backgroundColor: Color(0xfff44336),
+        title: Row(
+          children: [Text('Login')],
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            color: Color(0xfffeefd5),
-            child: Form(
-              key: _formkey,
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
-                      child: Image(
-                        image: AssetImage('assets/images/Login.jpeg'),
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 30),
-                      child: Text(
-                        'Ingresa tus credenciales',
-                        style: TextStyle(
-                          fontFamily: "Poppins-Bold",
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 0),
-                      child: Text(
-                        'registrandas para acceder',
-                        style: TextStyle(
-                          fontFamily: "Poppins-Bold",
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 30),
-                      child: Container(
-                        width: 300,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 1.0),
-                          borderRadius: BorderRadius.all(Radius.circular(
-                                  10) //         <--- border radius here
-                              ),
-                        ),
-                        child: TextFormField(
-                          //autofocus: true,
-                          controller: nombreControler,
-
-                          style: TextStyle(color: Colors.black),
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Ingresa tu gmail",
-                            icon: Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: Icon(
-                                Icons.account_circle_rounded,
-                                color: Colors.black,
-                                size: 30,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 30),
-                      child: Container(
-                        width: 300,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 1.0),
-                          borderRadius: BorderRadius.all(Radius.circular(
-                                  10) //         <--- border radius here
-                              ),
-                        ),
-                        child: TextFormField(
-                          controller: contraControler,
-                          obscureText: true,
-                          obscuringCharacter: "*",
-                          style: TextStyle(color: Colors.black),
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Contraseña",
-                            hintStyle: TextStyle(),
-                            icon: Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: Icon(
-                                Icons.lock_rounded,
-                                color: Colors.black,
-                                size: 30,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Text(
-                            "¿Aún no tienes una cuenta?",
-                            style:
-                                TextStyle(fontFamily: "Poppins", fontSize: 14),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SingUp()));
-                          },
-                          child: Text(
-                            "Consigue una",
-                            style: TextStyle(
-                              fontFamily: "Poppins-Bold",
-                              fontSize: 14,
-                              color: Color(0xffFC4F32),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 25),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xffFC4F32),
-                            borderRadius: BorderRadius.circular(15)),
-                        width: 300,
-                        height: 65,
-                        margin: EdgeInsets.only(top: 20),
-                        child: FlatButton(
-                          //splashColor: Colors.white,
-                          //shape: CircleBorder(),
-
-                          onPressed: () {
-                            contra = contraControler.text;
-                            final sb = SnackBar(
-                              content:
-                                  Text('!Usuario o contraseña incorrectos'),
-                            );
-
-                            if (!_formkey.currentState.validate()) {
-                              return;
-                            }
-
-                            var retUser = userProvider.getUser(user.email);
-
-                            //      print(retUser.password + '2143qr');
-                            if (retUser == null) {
-                              print("La contraseña es $contra");
-                              if (!StringAdm.validarPasswords(
-                                  retUser.password, contra)) {
-                                //true o false
-                                //   Scaffold.of(context).showSnackBar(sb);
-                                print('contraseña no coincide');
-                              } else {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Dashboard()));
-                              }
-                            } else {
-                              //   Scaffold.of(context).showSnackBar(sb);
-                              print("El nombre es rthfgdffdhdf");
-                            }
-                            print("El nombre es $nombre");
-                            print("La contraseña es $contra");
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              'CONTINUAR',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color(0xffffffff),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+                child: Image.asset(
+                  'assets/images/Login.jpeg',
+                  colorBlendMode: BlendMode.color,
+                  width: 270.0,
+                  height: 187.0,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
-          ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Text(
+                  'Ingresa tus credenciales',
+                  style: TextStyle(
+                    fontFamily: "Poppins-Bold",
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 0),
+                child: Text(
+                  'registrandas para acceder',
+                  style: TextStyle(
+                    fontFamily: "Poppins-Bold",
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 40),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp(r'\s'))
+                      ],
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          print('No se ingreso email');
+                          return 'Debes ingresar tu email';
+                        }
+                        if (!StringAdm.validarEmail(value)) {
+                          return 'Ingresa un Email valido';
+                        }
+                        user.email = value;
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 15.0,
+                          horizontal: 10.0,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15.0),
+                          ),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.email,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        hintText: 'Email',
+                        hintStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Debes ingresar tu contraseña';
+                          }
+                          if (value.length < 4) {
+                            return 'Contraseña demasiado corta';
+                          }
+                          user.password = value;
+                          return null;
+                        },
+                        obscureText: true,
+                        obscuringCharacter: "*",
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 15.0,
+                            horizontal: 10.0,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15.0),
+                            ),
+                          ),
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: Colors.black,
+                            size: 30,
+                          ),
+                          hintText: 'Contraseña',
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text(
+                              "¿Aún no tienes una cuenta?",
+                              style: TextStyle(
+                                  fontFamily: "Poppins", fontSize: 14),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SingUp()));
+                            },
+                            child: Text(
+                              "Consigue una",
+                              style: TextStyle(
+                                fontFamily: "Poppins-Bold",
+                                fontSize: 14,
+                                color: Color(0xffFC4F32),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20.0),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 60.0,
+                        child: LogginButton(
+                            formKey: _formKey,
+                            user: user,
+                            userProvider: userProvider),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LogginButton extends StatelessWidget {
+  const LogginButton({
+    Key key,
+    @required GlobalKey<FormState> formKey,
+    @required this.user,
+    @required this.userProvider,
+  })  : _formKey = formKey,
+        super(key: key);
+  final GlobalKey<FormState> _formKey;
+  final User user;
+  final UserPrv userProvider;
+
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () async {
+        final sb = SnackBar(
+          content: Text('¡Usuario o contraseñas incorrectos'),
+        );
+        print("Bienvenido");
+        print("$user.email");
+        print("$user.password");
+        if (!_formKey.currentState.validate()) {
+          return;
+        }
+        var retUsr = userProvider.getUser(user.email);
+        print(retUsr.password);
+        if (retUsr != null) {
+          if (!StringAdm.validarPasswords(retUsr.password, user.password)) {
+            Scaffold.of(context).showSnackBar(sb);
+            print('Las contraseñas no coinciden');
+          } else {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Dashboard(),
+                ));
+            print('Encontrado');
+          }
+        } else {
+          Scaffold.of(context).showSnackBar(sb);
+          print('No encontrado');
+        }
+        _formKey.currentState.save();
+      },
+      child: Text(
+        'INICIAR SESIÓN',
+        style: TextStyle(color: Colors.white, fontSize: 15),
+      ),
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        ),
+        backgroundColor: MaterialStateProperty.all<Color>(
+          Color.fromRGBO(252, 79, 50, 1),
         ),
       ),
     );

@@ -1,305 +1,342 @@
-//Orlando Ortiz
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:practica_1/Providers/UserPrv.dart';
 import 'package:practica_1/models/users.dart';
-import 'package:practica_1/utils/string_admin.dart';
+import 'package:practica_1/utils/Stringadm.dart';
 import 'package:provider/provider.dart';
 
 class SingUp extends StatefulWidget {
+  SingUp({Key key}) : super(key: key);
   @override
   _SingUpState createState() => _SingUpState();
 }
 
 class _SingUpState extends State<SingUp> {
+  String nombre = "";
+  String email = "";
+  String password = "";
   User user = User();
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
+  final nombreController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    nombreController.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     final UserPrv userProvider = Provider.of<UserPrv>(context);
-    /*Borar variables
-    String nombre = "", email = "", telefono = "", contra = "", contra2 = "";
-    final nombreController = TextEditingController();
-    final emailController = TextEditingController();
-    final telefonoController = TextEditingController();*/
 
-    @override
-    void disponse() {
-      /*  nombreController.dispose();
-      emailController.dispose();
-      telefonoController.dispose();
-      contraController.dispose();
-      contra2Controller.dispose();*/
-      super.dispose();
-    }
-
-    return Container(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Sing up"),
-          backgroundColor: Color(0xffFC4F32),
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 249, 239),
+      appBar: AppBar(
+        backgroundColor: Color(0xfff44336),
+        title: Row(
+          children: [Text('Sing Up')],
         ),
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formkey,
-            child: Container(
-              color: Color(0xfffeefd5),
-              child: Center(
-                child: Column(
-                  children: [
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                        child: Image(
-                          image: AssetImage('assets/images/SingUp.png'),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: Container(
-                          width: 300,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1.0),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: TextFormField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'[a-zA-Z]+|\s')),
-                            ],
-
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Ingrese su nombre';
-                              }
-                              if (value.length < 5) {
-                                return 'Nombre demasiado corto';
-                              }
-                              user.name = value;
-                              return null;
-                            },
-
-                            //autofocus: true,
-                            style: TextStyle(color: Colors.black, fontSize: 18),
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Nombre",
-                              hintStyle: TextStyle(fontSize: 18),
-                              prefixIcon: Icon(
-                                Icons.account_circle_sharp,
-                                size: 30,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Container(
-                          width: 300,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1.0),
-                            borderRadius: BorderRadius.all(Radius.circular(
-                                    10) //         <--- border radius here
-                                ),
-                          ),
-                          child: TextFormField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.deny(RegExp(r'\s')),
-                            ],
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Ingresa un correo valido';
-                              }
-                              if (!StringAdm.validarEmail(value)) {
-                                return 'Ingresa un email valido';
-                              }
-                              user.email = value;
-                              return null;
-                            },
-                            style: TextStyle(color: Colors.black, fontSize: 18),
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Email",
-                                hintStyle: TextStyle(fontSize: 18),
-                                prefixIcon: Icon(
-                                  Icons.mail,
-                                  size: 30,
-                                  color: Colors.black,
-                                )),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Container(
-                          width: 300,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1.0),
-                            borderRadius: BorderRadius.all(Radius.circular(
-                                    10) //         <--- border radius here
-                                ),
-                          ),
-                          child: TextFormField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(10),
-                            ],
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Ingrese un numero';
-                              }
-                              if (value.length != 10) {
-                                return 'Ingresa 10 mueros exactos';
-                              }
-                              user.phone = value;
-                              return null;
-                            },
-                            style: TextStyle(color: Colors.black, fontSize: 18),
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Telefono",
-                                hintStyle: TextStyle(fontSize: 18),
-                                prefixIcon: Icon(
-                                  Icons.phone,
-                                  size: 30,
-                                  color: Colors.black,
-                                )),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Container(
-                          width: 300,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1.0),
-                            borderRadius: BorderRadius.all(Radius.circular(
-                                    10) //         <--- border radius here
-                                ),
-                          ),
-                          child: TextFormField(
-                            // controller: contraController,
-                            style: TextStyle(color: Colors.black, fontSize: 18),
-                            obscureText: true,
-                            obscuringCharacter: "*",
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Contraseña",
-                                hintStyle: TextStyle(fontSize: 18),
-                                prefixIcon: Icon(
-                                  Icons.lock,
-                                  size: 30,
-                                  color: Colors.black,
-                                )),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Container(
-                          width: 300,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1.0),
-                            borderRadius: BorderRadius.all(Radius.circular(
-                                    10) //         <--- border radius here
-                                ),
-                          ),
-                          child: TextFormField(
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Ingrese una contraseña';
-                              }
-                              user.password = value;
-                              return null;
-                            },
-                            style: TextStyle(color: Colors.black, fontSize: 18),
-                            obscureText: true,
-                            obscuringCharacter: "*",
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Confirmar contraseña",
-                              hintStyle: TextStyle(fontSize: 18),
-                              prefixIcon: Icon(
-                                Icons.lock,
-                                size: 30,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 25),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Color(0xffFC4F32),
-                              borderRadius: BorderRadius.circular(15)),
-                          width: 300,
-                          height: 65,
-                          margin: EdgeInsets.only(top: 20),
-                          child: FlatButton(
-                            //splashColor: Colors.white,
-                            //shape: CircleBorder(),
-                            onPressed: () async {
-                              if (!_formkey.currentState.validate()) {
-                                return null;
-                              }
-
-                              print('todo ok');
-                              print(user.email);
-                              print(user.password);
-                              print('Los datos se han guardado!');
-                              final sb = SnackBar(
-                                  content: Text('Los datos se han guardado!'));
-
-                              Scaffold.of(context).showSnackBar(sb);
-                              userProvider.users = user;
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(
-                                'REGISTRARSE',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color(0xffffffff),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          color: Color(0xfffeefd5),
+          child: Column(
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 0.0),
+                  child: Image.asset(
+                    "assets/images/SingUp.png",
+                    colorBlendMode: BlendMode.color,
+                    height: 120,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
-            ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 20.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: TextFormField(
+                          keyboardType: TextInputType.text,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z]+|\s'))
+                          ],
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Ingrese su nombre';
+                            }
+                            if (value.contains(new RegExp(r'[0-9]'))) {
+                              return 'No puede ingresar numeros';
+                            }
+                            if (value.length < 4) {
+                              return 'Nombre demasiado corto';
+                            }
+                            user.name = value;
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 15.0,
+                              horizontal: 10.0,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15.0),
+                              ),
+                            ),
+                            prefixIcon: Icon(
+                              Icons.account_circle_sharp,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            hintText: 'Nombre',
+                            hintStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(RegExp(r'\s'))
+                          ],
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Debes de ingresar un Email';
+                            }
+                            if (!StringAdm.validarEmail(value)) {
+                              return 'Ingresa un Email valido';
+                            }
+                            user.email = value;
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 15.0,
+                              horizontal: 10.0,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              /*  borderSide: BorderSide(
+                                color: Color.fromARGB(250, 50, 150, 253),
+                                width: 1.5,
+                                style: BorderStyle.solid,
+                              ),*/
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15.0),
+                              ),
+                            ),
+                            prefixIcon: Icon(
+                              Icons.email,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            hintText: 'Email',
+                            hintStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: TextFormField(
+                          keyboardType: TextInputType.phone,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(10),
+                          ],
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Ingrese su número de telefono';
+                            }
+                            if (value.length != 10) {
+                              return 'Ingresa 10 mueros exactos';
+                            }
+                            user.phone = value;
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 15.0,
+                              horizontal: 10.0,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15.0),
+                              ),
+                            ),
+                            prefixIcon: Icon(
+                              Icons.phone,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            hintText: 'Telefono',
+                            hintStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value.length < 4) {
+                              return 'Contraseña demasiado corta';
+                            }
+                            user.password = value;
+                            return null;
+                          },
+                          obscureText: true,
+                          obscuringCharacter: "*",
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 15.0,
+                              horizontal: 10.0,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              /*  borderSide: BorderSide(
+                                color: Color.fromARGB(250, 50, 150, 253),
+                                width: 1.5,
+                                style: BorderStyle.solid,
+                              ),*/
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15.0),
+                              ),
+                            ),
+                            prefixIcon: Icon(
+                              Icons.lock,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            hintText: 'Contraseña',
+                            hintStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (!StringAdm.validarPasswords(
+                                value, user.password)) {
+                              return 'Las contraseñas no coinciden';
+                            }
+                            return null;
+                          },
+                          obscureText: true,
+                          obscuringCharacter: "*",
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 15.0,
+                              horizontal: 10.0,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              /*  borderSide: BorderSide(
+                                color: Color.fromARGB(250, 50, 150, 253),
+                                width: 1.5,
+                                style: BorderStyle.solid,
+                              ),*/
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15.0),
+                              ),
+                            ),
+                            prefixIcon: Icon(
+                              Icons.lock,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            hintText: 'Confirmar contraseña',
+                            hintStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20.0),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 60,
+                            child: LogginButton(
+                                formKey: _formKey,
+                                user: user,
+                                userProvider: userProvider),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class LogginButton extends StatelessWidget {
+  const LogginButton({
+    Key key,
+    @required GlobalKey<FormState> formKey,
+    @required this.user,
+    @required this.userProvider,
+  })  : _formKey = formKey,
+        super(key: key);
+  final GlobalKey<FormState> _formKey;
+  final User user;
+  final UserPrv userProvider;
+
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () async {
+        if (!_formKey.currentState.validate()) {
+          return;
+        }
+
+        print('Todo bien');
+        print(user.email);
+        final sb = SnackBar(
+          content: Text('¡Los datos se han guardado!'),
+        );
+
+        Scaffold.of(context).showSnackBar(sb);
+        userProvider.user = user;
+        userProvider.users = user;
+        _formKey.currentState.save();
+        await Future.delayed(Duration(seconds: 1));
+        Navigator.pop(context);
+      },
+      child: Text(
+        'CREAR CUENTA',
+        style: TextStyle(color: Colors.white, fontSize: 15),
+      ),
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        ),
+        backgroundColor: MaterialStateProperty.all<Color>(
+          Color(0xffFC4F32),
         ),
       ),
     );

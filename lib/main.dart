@@ -27,7 +27,7 @@ class App extends StatelessWidget {
         theme: ThemeData(primaryColor: Color(0xffFC4F32)),
         home: Scaffold(
           body: PageView(
-            children: [Splash(), Welcome(), Dashboard()],
+            children: [Dashboard()],
           ),
         ));
   }
