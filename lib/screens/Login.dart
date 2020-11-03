@@ -36,18 +36,7 @@ class _LoginState extends State<Login> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
-                child: Image.asset(
-                  'assets/images/Login.jpeg',
-                  colorBlendMode: BlendMode.color,
-                  width: 270.0,
-                  height: 187.0,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
+            
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 30),
