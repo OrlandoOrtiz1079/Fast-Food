@@ -1,17 +1,138 @@
 import 'package:flutter/material.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
+  String nameUsu;
+  Dashboard(this.nameUsu);
+  @override
+  _DashboardState createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Hola Orlando"),
-          
-        ),
         body: SingleChildScrollView(
           child: Column(
             children: [
+              //Appbar
+              Container(
+                  width: double.infinity,
+                  height: 180,
+                  decoration: BoxDecoration(
+                    color: Color(0xfff44336),
+                    border: Border.all(
+                      width: 5,
+                      color: Color(0xfff44336),
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 30, 0, 0),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Hola ' + widget.nameUsu,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                ),
+                              ),
+                              flex: 7,
+                            ),
+                            Expanded(
+                              child: Container(
+                                width: 45,
+                                height: 45,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Image.asset(
+                                  "assets/images/author.png",
+                                  colorBlendMode: BlendMode.color,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              flex: 1,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                        child: Row(
+                          children: [
+                            Text(
+                              '¿Que quieres comer hoy?',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 15, 10, 5),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xffFC836E),
+                              borderRadius: BorderRadius.circular(15)),
+                          child: TextFormField(
+                            textCapitalization: TextCapitalization.sentences,
+                            cursorColor: Colors.white,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 15.0,
+                                horizontal: 10.0,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xffFC836E),
+                                  width: 1.5,
+                                  style: BorderStyle.solid,
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15.0),
+                                ),
+                              ),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                              hintText: 'Buscar platilos o restaurantes',
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+              //Populares acerca para ti
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 15, 0, 8),
+                    child: Text(
+                      'Populares acerca para ti',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  )
+                ],
+              ),
+
+              //parte de abajo hamburgesas
               Container(
                   height: 180,
                   child: ListView(
@@ -21,7 +142,14 @@ class Dashboard extends StatelessWidget {
                         child: Container(
                           width: 230,
                           height: 185,
-                          color: Colors.blue,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 2,
+                            ),
+                            //  borderRadius: BorderRadius.circular(30),
+                          ),
                           child: Column(
                             children: [
                               Padding(
@@ -136,7 +264,14 @@ class Dashboard extends StatelessWidget {
                         child: Container(
                           width: 230,
                           height: 185,
-                          color: Colors.blue,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 2,
+                            ),
+                            //  borderRadius: BorderRadius.circular(30),
+                          ),
                           child: Column(
                             children: [
                               Padding(
@@ -146,7 +281,7 @@ class Dashboard extends StatelessWidget {
                                     'assets/images/tacos.png',
                                     //  colorBlendMode: BlendMode.color,
                                     width: double.infinity,
-                                    height: 95,
+                                    height: 90,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -247,8 +382,9 @@ class Dashboard extends StatelessWidget {
                       ),
                     ],
                   )),
+
+              //Explorar categorias
               Row(
-                //Explorar categorias
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8, 15, 0, 8),
@@ -259,8 +395,9 @@ class Dashboard extends StatelessWidget {
                   )
                 ],
               ),
+
+              //Cuadros de colores Comida rapida
               Container(
-                ///rapida
                 height: 170,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
@@ -412,8 +549,9 @@ class Dashboard extends StatelessWidget {
                   ],
                 ),
               ),
+
+              //Recomendados
               Row(
-                //Recomendados
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8, 15, 0, 8),
@@ -424,8 +562,9 @@ class Dashboard extends StatelessWidget {
                   )
                 ],
               ),
+
+              //Sushi
               Container(
-                //Recomendados
                 height: 200,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
@@ -435,98 +574,101 @@ class Dashboard extends StatelessWidget {
                       child: Container(
                           width: 180,
                           height: 200,
-                          color: Colors.blue,
-                          child: Card(
-                            child: Container(
-                              width: 180,
-                              height: 200,
-                              color: Colors.blue,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                                    child: Center(
-                                      child: Image.asset(
-                                        'assets/images/comjapan.png',
-                                        //  colorBlendMode: BlendMode.color,
-                                        width: double.infinity,
-                                        height: 80,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 0),
-                                    child: Container(
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            'Sushi Grill',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontFamily: "Poppins-Bold",
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(2, 5, 0, 5),
-                                    child: Container(
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                                'Sushi, Pezcado fresco, Ramen, Ensaladas'),
-                                            flex: 2,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Row(children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 2),
-                                        child: Icon(
-                                          Icons.star,
-                                          color: Colors.yellow,
-                                          size: 30,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 0),
-                                        child: Icon(
-                                          Icons.star,
-                                          color: Colors.yellow,
-                                          size: 30,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 0),
-                                        child: Icon(
-                                          Icons.star,
-                                          color: Colors.yellow,
-                                          size: 30,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 0),
-                                        child: Icon(
-                                          Icons.star,
-                                          color: Colors.yellow,
-                                          size: 30,
-                                        ),
-                                      ),
-                                    ]),
-                                  )
-                                ],
-                              ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 2,
                             ),
-                            elevation: 10,
+                            //  borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Container(
+                            width: 180,
+                            height: 200,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                                  child: Center(
+                                    child: Image.asset(
+                                      'assets/images/comjapan.png',
+                                      //  colorBlendMode: BlendMode.color,
+                                      width: double.infinity,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 0),
+                                  child: Container(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'Sushi Grill',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontFamily: "Poppins-Bold",
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(2, 5, 0, 5),
+                                  child: Container(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                              'Sushi, Pezcado fresco, Ramen, Ensaladas'),
+                                          flex: 2,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: Row(children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 2),
+                                      child: Icon(
+                                        Icons.star,
+                                        color: Colors.yellow,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      child: Icon(
+                                        Icons.star,
+                                        color: Colors.yellow,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      child: Icon(
+                                        Icons.star,
+                                        color: Colors.yellow,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      child: Icon(
+                                        Icons.star,
+                                        color: Colors.yellow,
+                                        size: 30,
+                                      ),
+                                    ),
+                                  ]),
+                                )
+                              ],
+                            ),
                           )),
                     ),
                     Card(
@@ -534,117 +676,123 @@ class Dashboard extends StatelessWidget {
                       child: Container(
                           width: 180,
                           height: 230,
-                          color: Colors.blue,
-                          child: Card(
-                            child: Container(
-                              width: 180,
-                              height: 200,
-                              color: Colors.blue,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                                    child: Center(
-                                      child: Image.asset(
-                                        'assets/images/yucateca.png',
-                                        //  colorBlendMode: BlendMode.color,
-                                        width: double.infinity,
-                                        height: 80,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 0),
-                                    child: Container(
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            'Boxito Lindo',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontFamily: "Poppins-Bold",
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(2, 5, 0, 5),
-                                    child: Container(
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                                'Comida tradicional yucateca'),
-                                            flex: 2,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Row(children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 2),
-                                        child: Icon(
-                                          Icons.star,
-                                          color: Colors.yellow,
-                                          size: 30,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 0),
-                                        child: Icon(
-                                          Icons.star,
-                                          color: Colors.yellow,
-                                          size: 30,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 0),
-                                        child: Icon(
-                                          Icons.star,
-                                          color: Colors.yellow,
-                                          size: 30,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 0),
-                                        child: Icon(
-                                          Icons.star,
-                                          color: Colors.yellow,
-                                          size: 30,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 0),
-                                        child: Icon(
-                                          Icons.star,
-                                          color: Colors.yellow,
-                                          size: 30,
-                                        ),
-                                      ),
-                                    ]),
-                                  )
-                                ],
-                              ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 2,
                             ),
-                            elevation: 10,
+                            //  borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Container(
+                            width: 180,
+                            height: 200,
+                            color: Colors.white,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                                  child: Center(
+                                    child: Image.asset(
+                                      'assets/images/yucateca.png',
+                                      //  colorBlendMode: BlendMode.color,
+                                      width: double.infinity,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 0),
+                                  child: Container(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'Boxito Lindo',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontFamily: "Poppins-Bold",
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(2, 5, 0, 5),
+                                  child: Container(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                              'Comida tradicional yucateca'),
+                                          flex: 2,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: Row(children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 2),
+                                      child: Icon(
+                                        Icons.star,
+                                        color: Colors.yellow,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      child: Icon(
+                                        Icons.star,
+                                        color: Colors.yellow,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      child: Icon(
+                                        Icons.star,
+                                        color: Colors.yellow,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      child: Icon(
+                                        Icons.star,
+                                        color: Colors.yellow,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      child: Icon(
+                                        Icons.star,
+                                        color: Colors.yellow,
+                                        size: 30,
+                                      ),
+                                    ),
+                                  ]),
+                                )
+                              ],
+                            ),
                           )),
                     )
                   ],
                 ),
               ),
+
+              //Mas informacion
               Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8, 15, 0, 8),
                     child: Text(
-                      'Mas nformacion',
+                      'Mas informacion',
                       style: TextStyle(fontSize: 20),
                     ),
                   )

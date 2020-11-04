@@ -4,7 +4,6 @@ import 'package:practica_1/Providers/UserPrv.dart';
 import 'package:practica_1/models/users.dart';
 import 'package:practica_1/screens/Dashboard.dart';
 import 'package:practica_1/screens/SingUp.dart';
-import 'package:practica_1/screens/splash.dart';
 import 'package:practica_1/utils/StringAdm.dart';
 import 'package:provider/provider.dart';
 
@@ -225,6 +224,7 @@ class LogginButton extends StatelessWidget {
         final sb = SnackBar(
           content: Text('¡Usuario o contraseñas incorrectos'),
         );
+
         print("Bienvenido");
         print("$user.email");
         print("$user.password");
@@ -238,10 +238,22 @@ class LogginButton extends StatelessWidget {
             Scaffold.of(context).showSnackBar(sb);
             print('Las contraseñas no coinciden');
           } else {
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //    CircularProgressIndicator(),
+                    Text('Ingresando al Dashboard'),
+                  ],
+                ),
+              ),
+            );
+            await Future.delayed(Duration(seconds: 4));
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Dashboard(),
+                  builder: (context) => Dashboard(retUsr.name),
                 ));
             print('Encontrado');
           }

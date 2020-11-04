@@ -67,6 +67,7 @@ class _SingUpState extends State<SingUp> {
                       Padding(
                         padding: const EdgeInsets.only(top: 15),
                         child: TextFormField(
+                          textCapitalization: TextCapitalization.sentences,
                           keyboardType: TextInputType.text,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
@@ -317,14 +318,17 @@ class LogginButton extends StatelessWidget {
         print('Todo bien');
         print(user.email);
         final sb = SnackBar(
-          content: Text('¡Los datos se han guardado!'),
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Text('¡Los datos se han guardado!')],
+          ),
         );
 
         Scaffold.of(context).showSnackBar(sb);
         userProvider.user = user;
         userProvider.users = user;
         _formKey.currentState.save();
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(Duration(seconds: 3));
         Navigator.pop(context);
       },
       child: Text(
