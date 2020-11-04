@@ -1,3 +1,4 @@
+//Orlando Ortiz
 class StringAdm {
   static bool validarEmail(String email) {
     Pattern pattern =
